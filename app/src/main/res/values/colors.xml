@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="ic_launcher_background">#2E5E4E</color>
+    <!-- Matches the Compose brand background (md_light_background) to avoid a
+         default-white flash before Compose draws. -->
+    <color name="brand_background">#FFF6FBF6</color>
 </resources>

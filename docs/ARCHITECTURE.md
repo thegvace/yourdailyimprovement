@@ -92,6 +92,21 @@ HomeScreen (collects StateFlow)
   Classes with an `@Inject` constructor (use cases, data sources) are provided
   automatically with no extra wiring.
 
+## Design system
+
+The UI is built on a small design system so screens stay visually consistent and
+never reach for raw values:
+
+- **Theme** (`ui/theme/`) — brand `Color` palette (dynamic colour off by default
+  for a consistent look), a tuned `Type` scale, `Shape`s, and a `Spacing` scale
+  exposed as `MaterialTheme.spacing.*` (a 4dp grid). `YourDailyImprovementTheme`
+  installs all of these.
+- **Components** (`ui/components/`) — reusable, screen-agnostic building blocks:
+  `AppButton`, `AppCard` (the shared surface every card/list row builds on),
+  `TipCard`, and `EmptyState` (slot-based icon/action). Screens compose these
+  rather than Material widgets directly, so a change in one place updates the
+  whole app.
+
 ## Where new features go
 
 | To add… | Put it in… |

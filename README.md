@@ -121,9 +121,25 @@ The included vertical slice — a daily improvement tip — runs the full path:
 
 ## What you get
 
-Launching the app shows a Compose home screen that loads today's improvement tip
-through the ViewModel/use-case/repository chain, with loading, success, and error
-states, wired through a Material 3 theme with dynamic color on Android 12+.
+Launching the app shows a Compose home screen with a branded top bar that loads
+today's improvement tip through the ViewModel/use-case/repository chain, with
+loading, success, and error states.
+
+### Design system
+
+A small, consistent Material 3 design system lives in `ui/theme` and
+`ui/components`:
+
+- **Colour** — a custom green-forward brand palette (`ui/theme/Color.kt`).
+  Dynamic (wallpaper) colour is **off by default** so the brand renders
+  consistently on every device; pass `dynamicColor = true` to opt in.
+- **Typography** — tuned type scale in `ui/theme/Type.kt`.
+- **Spacing** — a 4dp grid exposed as `MaterialTheme.spacing.*`
+  (`ui/theme/Spacing.kt`), so no screen hard-codes dp values.
+- **Shapes** — softer rounded corners in `ui/theme/Shape.kt`.
+- **Reusable components** (`ui/components/`): `AppButton` (primary/secondary),
+  `AppCard` (base surface for cards & list rows), `TipCard`, and `EmptyState`.
+  These are used across the app so screens stay consistent.
 
 ## Next steps
 
