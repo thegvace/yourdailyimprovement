@@ -11,6 +11,10 @@ An Android application scaffold built with **Kotlin** and **Jetpack Compose**.
 | --------------- | ---------------------------------------- |
 | Language        | Kotlin 2.0                               |
 | UI toolkit      | Jetpack Compose (Material 3)             |
+| Architecture    | Layered (domain / data / ui) + MVVM      |
+| DI              | Hilt (KSP)                               |
+| Navigation      | Navigation Compose                       |
+| Async           | Kotlin Coroutines + Flow                 |
 | Build system    | Gradle (Kotlin DSL) + version catalog    |
 | Android Gradle Plugin | 8.7.3                              |
 | compileSdk / targetSdk | 35 (Android 15)                   |
@@ -28,8 +32,19 @@ android app/
 │       ├── main/
 │       │   ├── AndroidManifest.xml
 │       │   ├── java/com/yourdailyimprovement/androidapp/
-│       │   │   ├── MainActivity.kt     # Entry point + HomeScreen composable
-│       │   │   └── ui/theme/           # Compose theme (Color, Type, Theme)
+│       │   │   ├── YourDailyImprovementApp.kt   # @HiltAndroidApp Application
+│       │   │   ├── MainActivity.kt              # Single-activity host
+│       │   │   ├── di/                          # Hilt modules
+│       │   │   ├── domain/                      # Business logic (framework-free)
+│       │   │   │   ├── model/                   #   Domain models
+│       │   │   │   ├── repository/              #   Repository interfaces
+│       │   │   │   └── usecase/                 #   Use cases
+│       │   │   ├── data/                        # Data layer
+│       │   │   │   └── repository/              #   Repository implementations
+│       │   │   └── ui/                          # Presentation layer
+│       │   │       ├── home/                    #   HomeScreen + ViewModel + UiState
+│       │   │       ├── navigation/              #   NavHost + routes
+│       │   │       └── theme/                   #   Compose theme
 │       │   └── res/                    # Resources (strings, icons, themes)
 │       ├── test/                       # Local JVM unit tests
 │       └── androidTest/                # Instrumented tests
@@ -80,13 +95,32 @@ sdk.dir=C\:\\Users\\aspin\\AppData\\Local\\Android\\Sdk
 ./gradlew test
 ```
 
+## Architecture
+
+The app follows a layered, unidirectional-dependency design:
+
+```
+ui (Compose + ViewModel)  ──►  domain (use cases, models, repo interfaces)  ◄──  data (repo impls)
+```
+
+- **UI** observes immutable `UiState` from a `ViewModel` via `StateFlow`; it
+  never touches the data layer directly.
+- **Domain** is pure Kotlin (no Android imports) — easy to unit test.
+- **Data** implements the domain's repository interfaces. The concrete binding
+  lives in a single Hilt module (`di/RepositoryModule.kt`), so swapping the
+  in-memory source for a database or API is a one-file change.
+
+The included vertical slice — a daily improvement tip — runs the full path:
+`ImprovementRepositoryImpl → GetDailyTipUseCase → HomeViewModel → HomeScreen`.
+
 ## What you get
 
-Launching the app shows a simple Compose home screen with the app title and a
-welcome line, wired through a Material 3 theme with dynamic color on Android 12+.
+Launching the app shows a Compose home screen that loads today's improvement tip
+through the ViewModel/use-case/repository chain, with loading, success, and error
+states, wired through a Material 3 theme with dynamic color on Android 12+.
 
 ## Next steps
 
-The structure is intentionally minimal and ready for the next milestone
-(architecture): navigation, a dependency-injection setup, and a
-data/domain/UI layer split.
+The structure is ready to grow: add screens as new routes in `ui/navigation`,
+new features as `domain` use cases backed by real `data` sources (Room / Retrofit),
+and additional Hilt modules for those data sources.
