@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.yourdailyimprovement.androidapp.ui.navigation.AppNavHost
+import com.yourdailyimprovement.androidapp.navigation.AppNavHost
 import com.yourdailyimprovement.androidapp.ui.theme.YourDailyImprovementTheme
 import dagger.hilt.android.AndroidEntryPoint
 

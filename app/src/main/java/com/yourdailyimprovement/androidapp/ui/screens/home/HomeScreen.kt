@@ -1,4 +1,4 @@
-package com.yourdailyimprovement.androidapp.ui.home
+package com.yourdailyimprovement.androidapp.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.yourdailyimprovement.androidapp.domain.model.ImprovementTip
+import com.yourdailyimprovement.androidapp.ui.components.TipCard
 import com.yourdailyimprovement.androidapp.ui.theme.YourDailyImprovementTheme
 
 /**
@@ -80,20 +80,6 @@ fun HomeContent(
                     Text("Retry")
                 }
             }
-        }
-    }
-}
-
-@Composable
-private fun TipCard(tip: ImprovementTip, modifier: Modifier = Modifier) {
-    Card(modifier = modifier) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(text = tip.title, style = MaterialTheme.typography.titleLarge)
-            Text(
-                text = tip.description,
-                style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.padding(top = 8.dp),
-            )
         }
     }
 }

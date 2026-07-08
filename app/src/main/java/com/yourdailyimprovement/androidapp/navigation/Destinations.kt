@@ -1,4 +1,4 @@
-package com.yourdailyimprovement.androidapp.ui.navigation
+package com.yourdailyimprovement.androidapp.navigation
 
 /**
  * Central list of navigation routes. Keeping them in one place avoids stringly

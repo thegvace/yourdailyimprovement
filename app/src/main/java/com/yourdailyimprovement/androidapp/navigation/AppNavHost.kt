@@ -1,4 +1,4 @@
-package com.yourdailyimprovement.androidapp.ui.navigation
+package com.yourdailyimprovement.androidapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,11 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.yourdailyimprovement.androidapp.ui.home.HomeScreen
+import com.yourdailyimprovement.androidapp.ui.screens.home.HomeScreen
 
 /**
  * Single source of truth for the app's navigation graph. New screens are added
- * here as additional [composable] destinations. Milestone 1 has a single Home
+ * here as additional [composable] destinations. This milestone has a single Home
  * destination; navigation is wired so later milestones just add routes.
  */
 @Composable

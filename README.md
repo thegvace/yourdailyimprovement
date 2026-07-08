@@ -40,11 +40,13 @@ android app/
 │       │   │   │   ├── repository/              #   Repository interfaces
 │       │   │   │   └── usecase/                 #   Use cases
 │       │   │   ├── data/                        # Data layer
+│       │   │   │   ├── local/                   #   Local data sources
 │       │   │   │   └── repository/              #   Repository implementations
-│       │   │   └── ui/                          # Presentation layer
-│       │   │       ├── home/                    #   HomeScreen + ViewModel + UiState
-│       │   │       ├── navigation/              #   NavHost + routes
-│       │   │       └── theme/                   #   Compose theme
+│       │   │   ├── ui/                          # Presentation layer (MVVM)
+│       │   │   │   ├── screens/                 #   One package per screen (Screen+VM+UiState)
+│       │   │   │   ├── components/              #   Reusable composables
+│       │   │   │   └── theme/                   #   Compose theme
+│       │   │   └── navigation/                  # App-level NavHost + routes
 │       │   └── res/                    # Resources (strings, icons, themes)
 │       ├── test/                       # Local JVM unit tests
 │       └── androidTest/                # Instrumented tests
@@ -59,22 +61,23 @@ android app/
 
 ## Prerequisites
 
-This machine does **not** currently have the Android toolchain installed. To
-build and run the app you need:
+To build and run the app you need:
 
 - **JDK 17** (bundled with recent Android Studio as the JBR).
 - **Android SDK** with platform **API 35** and build-tools.
 - Optionally **Android Studio** (Ladybug or newer) — the simplest way to get
   the SDK, an emulator, and a JDK in one install.
 
+> The development machine this project was scaffolded on already has JDK 17 and
+> the Android SDK (API 35 + emulator) installed and a verified build.
+
 If you use the command line instead of Android Studio, create a
-`local.properties` file in the project root pointing at your SDK:
+`local.properties` file in the project root pointing at your SDK (Android Studio
+writes this for you automatically):
 
 ```properties
 sdk.dir=C\:\\Users\\aspin\\AppData\\Local\\Android\\Sdk
 ```
-
-(Android Studio writes this file for you automatically.)
 
 ## Build & run
 
@@ -111,7 +114,10 @@ ui (Compose + ViewModel)  ──►  domain (use cases, models, repo interfaces)
   in-memory source for a database or API is a one-file change.
 
 The included vertical slice — a daily improvement tip — runs the full path:
-`ImprovementRepositoryImpl → GetDailyTipUseCase → HomeViewModel → HomeScreen`.
+`ImprovementLocalDataSource → ImprovementRepositoryImpl → GetDailyTipUseCase → HomeViewModel → HomeScreen`.
+
+📄 Full details, the package-by-package map, and "where new features go" are in
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## What you get
 
@@ -121,6 +127,7 @@ states, wired through a Material 3 theme with dynamic color on Android 12+.
 
 ## Next steps
 
-The structure is ready to grow: add screens as new routes in `ui/navigation`,
-new features as `domain` use cases backed by real `data` sources (Room / Retrofit),
-and additional Hilt modules for those data sources.
+The structure is ready to grow: add screens in `ui/screens/<feature>/` and wire
+their routes in `navigation/`, new features as `domain` use cases backed by real
+`data` sources (Room / Retrofit), and additional Hilt modules for those data
+sources.

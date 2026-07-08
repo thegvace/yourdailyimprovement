@@ -1,4 +1,4 @@
-package com.yourdailyimprovement.androidapp.ui.home
+package com.yourdailyimprovement.androidapp.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
